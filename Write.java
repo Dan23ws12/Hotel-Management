@@ -2,9 +2,9 @@ import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 
 public class Write implements Runnable {
-    Holder hotel_ob;
+    Hotel hotel_ob;
 
-    Write(Holder hotel_ob) {
+    Write(Hotel hotel_ob) {
         this.hotel_ob = hotel_ob;
     }
 

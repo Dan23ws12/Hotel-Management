@@ -1,26 +1,26 @@
-import java.io.Serializable;
 
-public class Food implements Serializable {
-    int itemno;
+public class Food {
+    private String name;
+    private String type;
     int quantity;
     float price;
 
-    Food(int itemno, int quantity) {
-        this.itemno = itemno;
+    Food(String name, String type, int quantity, float price) {
         this.quantity = quantity;
-        switch (itemno) {
-            case 1:
-                price = quantity * 50;
-                break;
-            case 2:
-                price = quantity * 60;
-                break;
-            case 3:
-                price = quantity * 70;
-                break;
-            case 4:
-                price = quantity * 30;
-                break;
-        }
+        this.price = price;
+        this.name = name;
+        this.type = type;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void serveFood() {
+        System.out.println(String.format("we are serving %s", this.name));
     }
 }

@@ -10,10 +10,6 @@
 */
 
 public class Customer extends Person {
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private String id;
     private static String[] LOYALTY_LVLS = { "NO LOYALTY", "BRONZE", "SILVER", "GOLD", "PLATINUM" };
     private int loyaltyLvl;
     private static int[] LOYALTY_BOUNDS = { 100, 200, 300, 500 };
@@ -24,7 +20,7 @@ public class Customer extends Person {
         super(firstName, lastName, gender, id);
         this.loyaltyLvl = 0;
         this.loyaltyPoints = 0;
-        // TODO Auto-generated constructor stub
+
     }
 
     public int getLoyaltyPoints() {

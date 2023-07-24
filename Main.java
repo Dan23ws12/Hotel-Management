@@ -12,7 +12,7 @@ public class Main {
             if (f.exists()) {
                 FileInputStream fin = new FileInputStream(f);
                 ObjectInputStream ois = new ObjectInputStream(fin);
-                Hotel.hotel_ob = (Holder) ois.readObject();
+                // Hotel.hotel_ob = (Hotel) ois.readObject();
                 ois.close();
                 fin.close();
             }

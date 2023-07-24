@@ -1,34 +1,44 @@
-
 import java.util.ArrayList;
 
-public class DoubleRoom {
-    private String name2;
-    private String contact2;
-    private String gender2;
-    private String name;
-    private String contact;
-    private String gender;
-    private ArrayList<Food> food = new ArrayList<>();
+/*
+ * DoubleRoom class
+ * 
+ * A class representing a room with double beds
+ * This room has a list of features such as AC, Gym
+ * and this room can accept up to two guests
+ * All guests must checkout at the same time
+ *  
+*/
+public class DoubleRoom extends Room {
+    private static String[] features = { "AC", "FREE BREAKFAST", "DOUBLE BED", "ROOM SERVICE", "GYM" };
+    private static int MAX_NUM_GUESTS = 4;
 
-    public DoubleRoom(String name, String contact, String gender, String name2, String contact2, String gender2) {
-        this.name = name;
-        this.contact = contact;
-        this.gender = gender;
-        this.name2 = name2;
-        this.contact2 = contact2;
-        this.gender2 = gender2;
+    // creates an empty room
+    public DoubleRoom() {
+        super();
     }
 
-    public ArrayList<Food> getFood() {
-        return this.food;
+    public void bookRoom(ArrayList<Customer> guests) {
+        if (guests.size() <= MAX_NUM_GUESTS) {
+            super.bookRoom(guests);
+        } else {
+            // TODO MIGHT CHANGE TO EXCEPTION
+            System.out.println("Tried to book more than maximum amount of guests");
+        }
+
     }
 
-    public String getName() {
-        return this.name;
+    /*
+     * prints or displays the features any double room has
+     * (presently prints might make a GUI later)
+     */
+    @Override
+    public void displayFeatures() {
+        String msg = "This double room room has ";
+        for (String feature : features) {
+            msg += String.format("%s, ", feature);
+        }
+        msg += "\n";
+        System.out.println(msg);
     }
-
-    public void addFood(Food food) {
-        this.food.add(food);
-    }
-
 }
