@@ -1,4 +1,7 @@
 import java.io.ObjectOutputStream;
+
+import MVC.Hotel;
+
 import java.io.FileOutputStream;
 
 public class Write implements Runnable {

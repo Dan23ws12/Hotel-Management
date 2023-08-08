@@ -1,27 +1,33 @@
+package Rooms;
+
 import java.util.ArrayList;
+
+import Exceptions.InvalidValueException;
+import Exceptions.NotAvailableException;
+import Exceptions.OverBookedException;
+import Users.Customer;
 
 /*
  * 
 */
 public class SingleRoom extends Room {
     private static String[] features = { "AC", "FREE BREAKFAST", "SINGLE BED", "ROOM SERVICE", "GYM" };
-    private static int MAX_NUM_GUESTS = 2;
+    private int MAX_NUM_GUESTS = 2;
 
     public SingleRoom() {
         super();
     }
 
     /*
-     * 
-    */
+     * If the room is not empty and the number of guest occupying the room is not
+     * over the maximum, the
+     * room is booked, all guests in the guest list occupy this room.
+     * Otherwise, appropriate exceptions are thrown
+     */
     @Override
-    public void bookRoom(ArrayList<Customer> guests) {
-        if (guests.size() <= MAX_NUM_GUESTS) {
-            super.bookRoom(guests);
-        } else {
-            // TODO MIGHT CHANGE TO EXCEPTION
-            System.out.println("Tried to book more than maximum amount of guests");
-        }
+    public void book(ArrayList<Customer> guests)
+            throws OverBookedException, InvalidValueException, NotAvailableException {
+        this.bookHelper(guests, MAX_NUM_GUESTS);
     }
 
     /*

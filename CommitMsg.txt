@@ -1,0 +1,13 @@
+I made packages and all exceptions are in one package, all users (Person and Customer classes) are in a package
+and there is an MVC (model view controller) package.
+
+I refactored Hotel, Room, SingleRoom and DoubleRoom classes, Added a LoginPage class that handles the uti
+when a Customer wants to log in, a SignUpPage class that handles UI when customers want to sign up and a
+TextFieldPanel class that is a Jpanel containing a textfield and a label describing what info should go 
+in that textfield.
+
+I added OverBookedException class covering the case when more than the allowed maximum number of customers
+try to book a room, I also added an images folder that will contain pictures to be used in the UI.
+
+I plan to make Person.gender to be an enum and to do more with the HotelController and HotelView classes, 
+the plan is to make sure the UI works and looks good before adding everything together

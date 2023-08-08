@@ -1,14 +1,38 @@
+package MVC;
+
 import java.io.Serializable;
 import java.util.HashMap;
+
+import Rooms.Room;
+import Rooms.DoubleRoom;
+import Rooms.SingleRoom;
+import Exceptions.EmptyRoomException;
+import Exceptions.InvalidValueException;
+import Exceptions.NotAvailableException;
+import Exceptions.OverBookedException;
+import Users.Customer;
+
 import java.util.ArrayList;
+
+interface Observable {
+    public void notifyObservers();
+
+    public void attach(Observer observer);
+
+    public void detach(Observer observer);
+
+}
 
 /*
  * A class representing the state of a hotel by storing all the rooms
  * There are 8 single and double rooms in this hotel.
- * Each room has a room number, single rooms are numbered 1-8, double rooms are numbered 9-16
-*/
-public class Hotel implements Serializable {
+ * Each room has a room number, single rooms are numbered 1-8, double rooms are
+ * numbered 9-16
+ */
+public class Hotel implements Serializable, Observable {
     private HashMap<Integer, Room> hotelRooms;
+    private HashMap<Integer, Integer[]> roomFeatureState;
+    private ArrayList<Observer> observers = new ArrayList<Observer>();
     private static int NUM_DOUBLE_ROOMS = 8;
     private static int NUM_SINGLE_ROOMS = 8, DOUBLE_ROOM_START_NO = NUM_SINGLE_ROOMS + 1;
     // double rooms number start at 9 = 8 (number of single rooms) + 1
@@ -16,6 +40,7 @@ public class Hotel implements Serializable {
 
     public Hotel() {
         this.hotelRooms = new HashMap<Integer, Room>();
+        this.roomFeatureState = new HashMap<Integer, Integer[]>();
         this.startHotel();
     }
 
@@ -23,40 +48,39 @@ public class Hotel implements Serializable {
      * if the hotel just starts maps all room numbers to their respective rooms
      */
     public void startHotel() {
+        Integer[] featureArr = { 0, 0, 0 };
         for (int i = 1; i <= NUM_SINGLE_ROOMS; i++) {
             this.hotelRooms.put(i, new SingleRoom());
+            this.roomFeatureState.put(i, featureArr);
         }
         for (int i = DOUBLE_ROOM_START_NO; i <= TOTAL_NUM_ROOMS; i++) {
             this.hotelRooms.put(i, new DoubleRoom());
+            this.roomFeatureState.put(i, featureArr);
         }
 
     }
 
     /*
-     * this function books a double room associated with the given room number and
+     * this function books room associated with the given room number and
      * occupied by the two guests
      */
-    public void allocateRoom(int roomNum, ArrayList<Customer> guests) throws NotAvailableException {
+    public void bookRoom(int roomNum, ArrayList<Customer> guests)
+            throws NotAvailableException, OverBookedException, InvalidValueException {
         Room room = this.hotelRooms.get(roomNum);
-        if (room.isEmpty()) {
-            room.bookRoom(guests);
-        } else {
-            throw new NotAvailableException(roomNum);
-        }
+        room.book(guests);
+    }
+
+    public void checkIn(int roomNum, ArrayList<Customer> guests) {
+
     }
 
     /*
      * This function cleans and checks out all customers in the room associated the
      * given number
      */
-    public void deallocateRoom(int roomNum) throws InvalidValueException {
+    public float checkOut(int roomNum) throws InvalidValueException, EmptyRoomException {
         Room room = getRoomAtNo(roomNum);
-        if (!room.isEmpty()) {
-            room.clean();
-            room.reset();
-        } else {
-            System.out.println(String.format("room no: %d is empty", roomNum));
-        }
+        return room.checkout();
     }
 
     /*
@@ -72,7 +96,7 @@ public class Hotel implements Serializable {
         return hotelRooms.get(roomNum);
     }
 
-    public void order(int roomNum, Food food) throws InvalidValueException {
+    public void order(int roomNum, Food food) throws InvalidValueException, EmptyRoomException {
         Room room = this.getRoomAtNo(roomNum);
         room.addFood(food);
     }
@@ -92,4 +116,30 @@ public class Hotel implements Serializable {
         return bookedRooms;
     }
 
+    protected HashMap<Integer, Integer[]> getFeatureState() {
+        return this.roomFeatureState;
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
+
+    /*
+     * adds an observer to the list of observers
+     */
+    @Override
+    public void attach(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    /*
+     * removes an observer to the list of observers
+     */
+    @Override
+    public void detach(Observer observer) {
+        this.observers.remove(observer);
+    }
 }

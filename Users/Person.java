@@ -1,3 +1,5 @@
+package Users;
+
 /*
  * This class represents a Person 
  * All people (objects of the Person class) has a non empty first and last name, gender amd an id

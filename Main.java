@@ -1,40 +1,20 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.util.Scanner;
+import java.awt.Color;
+
+import javax.swing.JFrame;
+
+import UI.LoginPage;
 
 public class Main {
     public static void main(String[] args) {
+        JFrame frame = new JFrame("login page");
+        frame.setLayout(null);
+        frame.getContentPane().setBackground(new Color(160, 160, 160));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setSize(600, 600);
+        LoginPage page = new LoginPage(frame);
+        frame.setVisible(true);
 
-        try {
-
-            File f = new File("backup");
-            if (f.exists()) {
-                FileInputStream fin = new FileInputStream(f);
-                ObjectInputStream ois = new ObjectInputStream(fin);
-                // Hotel.hotel_ob = (Hotel) ois.readObject();
-                ois.close();
-                fin.close();
-            }
-            Scanner sc = new Scanner(System.in);
-            int ch, ch2;
-            char wish;
-        } catch (Exception e) {
-            System.out.println("Not a valid input");
-        }
     }
 
-    /*
-     * throws an InvalidException if any of the arguments is null or an empty string
-     */
-    private void checkArguments(String[] args) throws InvalidValueException {
-        for (String arg : args) {
-            if (arg == null) {
-                throw new InvalidValueException();
-            }
-            if (arg.equals("")) {
-                throw new InvalidValueException(arg);
-            }
-        }
-    }
 }

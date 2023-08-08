@@ -1,3 +1,4 @@
+package Exceptions;
 
 /*
  * This exception is thrown whenever a user types in an invalid value for any parameter, 

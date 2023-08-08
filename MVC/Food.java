@@ -1,3 +1,4 @@
+package MVC;
 
 public class Food {
     private String name;
@@ -18,6 +19,10 @@ public class Food {
 
     public String getType() {
         return this.type;
+    }
+
+    public float getPrice() {
+        return this.price;
     }
 
     public void serveFood() {
